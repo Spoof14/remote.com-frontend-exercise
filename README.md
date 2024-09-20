@@ -1,3 +1,20 @@
+## Notes from Me
+
+Usually I would not be working directly in main but rather be creating PRs for each feature or refactor but as this challenge is rather about the code and not the process, I have chosen to skip the overhead of creating branches.
+
+I really prefer working with type safety and autocomplete, so I will be incrementally updating files to use TypeScript as I touch them but as the repository is already working using plain JS, I won't be going back to do unnecessary refactors. Another alternative could be JSdoc but I'm less experienced writing that.
+
+While I hate barrel files, I'll stick to the coding style that's already established, so any new components I create will have the same. I have had issues in the past with tests and compile time taking longer, navigating files being harder as well as cyclical dependencies.
+
+I changed the useEffect fetch logic in PeopleTable.jsx to use a loader that is built into react-router. Personally, I'm not a big fan of the react router loader / <Await> pattern and would prefer to use tanstack query or recoil for data fetching. They both support suspense too, while not having the extra Await component.
+As we just have the one call to fetch data, I don't see the need to add another dependency yet.
+_edit_ Changed my mind. Honestly a big fan of tanstack in general. While I do see the use of not having to create a wrapper component just to suspend it, it's just not big enough of a plus to be worth the dev experience of tanstack query. It will also facilitate further routes and data handling.
+I also found out it's easily possible to use the loader pattern together with tanstack query, which makes it a lot more appealing.
+
+Going through the readme again, I realize there are multiple endpoints for filtering already, and by not utilizing them, I'm not using the full power of tanstack query and the caching it provides.
+I would say it's not strictly necessary to use those endpoints in any case, as the list is small and we fetch all the results in the first place. On the other hand, if the list is very long and paginated it makes a ton of sense to not fetch everything on the first load. In this case we should also add functionality such as debounce to the search.
+I added a fast second PR with how the filtering and search could be implemented with network requests instead 
+
 # Frontend code exercise
 
 Hello there!
@@ -27,6 +44,13 @@ This is a basic CRUD of people. You'll need to finish the "People list" page:
 - Display a table with a list of people and their attributes.
 - Searching by name.
 - Filtering by employment type.
+- Number of people
+- "Add Member" button
+- bold names
+- Currency formatting
+- button styles
+- search field styles
+- toasts
 - Display any other missing element in the page as in the Figma file.
 
 The design specs are in the Figma file shared with you by e-mail. You only need to implement what's in the "People Part 1" section. Read the "sticky notes" that contain more requirements about the page mechanisms.
@@ -78,7 +102,7 @@ Note: do not take the choices on tools/approaches used in this PR as guidance wh
 
 ## Prerequisites
 
-- Node = 18.x
+- Node >= 18.x
 - NPM >= 9.x
 - Git
 

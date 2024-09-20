@@ -23,9 +23,17 @@ const typography = {
   bodyMedium: getTextStyles(500, '16px', 1.5),
   bodyBold: getTextStyles(600, '16px', 1.5),
 
-  bodySmall: getTextStyles(400, '14px', 1.29),
+  bodySmall: getTextStyles(400, '14px', 1.57),
+  bodySmallMuted: getTextStyles(400, '14px', 1.57),
   bodySmallBold: getTextStyles(600, '14px', 1.29),
   bodyCaption: getTextStyles(400, '13px', 1.23),
+
+  tableHeader: getTextStyles(600, '11px', 1.45),
+  tableCell: getTextStyles(400, '14px', 1.57),
+  tableCellBold: getTextStyles(600, '14px', 1.57),
+
+  checkboxLabel: getTextStyles(500, '14px', 1.57),
+
 };
 
 export default typography;
