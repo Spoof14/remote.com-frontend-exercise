@@ -1,5 +1,5 @@
 import { Table } from 'components/Table';
-import { ChangeEvent, PropsWithChildren, Suspense, useReducer, useState } from 'react';
+import { ChangeEvent, PropsWithChildren, Suspense, useEffect, useReducer, useState } from 'react';
 import LoadingLogo from 'components/LoadingLogo';
 import PeopleTableHead from './PeopleTableHead';
 import Search from 'components/Search';
@@ -43,7 +43,7 @@ const reducer = (state: Set<string>, filter: string) => {
 export default function PeopleTable() {
   const [searchValue, setSearchValue] = useState('');
   const [filters, toggleFilter] = useReducer(reducer, new Set<string>());
-
+  const debouncedValue = useDebouncedValue(searchValue);
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     toggleFilter(e.target.name);
   };
@@ -73,7 +73,7 @@ export default function PeopleTable() {
         >
           <Table>
             <PeopleTableHead />
-            <PeopleTableBody searchValue={searchValue} filters={filters} />
+            <PeopleTableBody searchValue={debouncedValue} filters={filters} />
           </Table>
         </ErrorBoundary>
       </Suspense>
@@ -91,3 +91,16 @@ const Fallback = ({ children }: PropsWithChildren) => {
     </>
   );
 };
+const useDebouncedValue = (originalValue: string) => {
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setValue(originalValue);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [originalValue]);
+  
+  return value;
+}

@@ -5,9 +5,9 @@ import { usePeople } from '../peopleQueries';
 type PeopleTableBodyProps = { searchValue: string; filters: Set<string> };
 export const PeopleTableBody = ({ searchValue, filters }: PeopleTableBodyProps) => {
   const lowerCaseSearch = searchValue.toLowerCase();
-  const people = usePeople()
-    .data.filter((person) => person.name.toLowerCase().includes(lowerCaseSearch))
-    .filter((person) => filters.has(person.employment) || filters.size === 0);
+  const people = usePeople(lowerCaseSearch, [...filters]).data;
+  // .data.filter((person) => person.name.toLowerCase().includes(lowerCaseSearch))
+  // .filter((person) => filters.has(person.employment) || filters.size === 0);
 
   return (
     <tbody>
